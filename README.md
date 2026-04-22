@@ -4,6 +4,8 @@ An interactive browser-based game that teaches the full data science pipeline th
 
 Built entirely on my own in 11th grade as part of the **Girls Who Code Summer Camp**.
 
+🌐 Live demo: https://myreen-final-game-myreenhm.replit.app
+
 ---
 
 ## How to Play
