@@ -65,6 +65,30 @@ let showImage = false;
 
 let uncleanItemsClicked = 0;
 
+// Window-level key tracker so arrow keys work regardless of canvas focus
+let keysDown = {};
+window.addEventListener('keydown', (e) => {
+  keysDown[e.key] = true;
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+    e.preventDefault();
+  }
+  // Handle single-press logic for the graph visualization screen
+  if (currentScreen === 'visualizingData') {
+    if (e.key === 'ArrowUp') {
+      if (currentX < userGraphData.length) userGraphData[currentX]++;
+    } else if (e.key === 'ArrowDown') {
+      if (currentX < userGraphData.length && userGraphData[currentX] > 0) userGraphData[currentX]--;
+    } else if (e.key === 'ArrowRight') {
+      if (currentX < userGraphData.length - 1) currentX++;
+    } else if (e.key === 'ArrowLeft') {
+      if (currentX > 0) currentX--;
+    }
+  }
+});
+window.addEventListener('keyup', (e) => {
+  keysDown[e.key] = false;
+});
+
 
 /* SETUP RUNS ONCE */
 function setup() {
@@ -330,16 +354,16 @@ function movePlayer() {
   let xMove = 0;
   let yMove = 0;
 
-  if (kb.pressing('left')) {
+  if (keysDown['ArrowLeft']) {
     xMove = -5;
   }
-  if (kb.pressing('right')) {
+  if (keysDown['ArrowRight']) {
     xMove = 5;
   }
-  if (kb.pressing('up')) {
+  if (keysDown['ArrowUp']) {
     yMove = -5;
   }
-  if (kb.pressing('down')) {
+  if (keysDown['ArrowDown']) {
     yMove = 5;
   }
   player.x += xMove;
@@ -706,27 +730,6 @@ function arraysEqual(a, b) {
   return true;
 }
 
-function keyPressed() {
-  if (currentScreen === 'visualizingData') {
-    if (keyCode === UP_ARROW) {
-      if (currentX < userGraphData.length) {
-        userGraphData[currentX]++;
-      }
-    } else if (keyCode === DOWN_ARROW) {
-      if (currentX < userGraphData.length && userGraphData[currentX] > 0) {
-        userGraphData[currentX]--;
-      }
-    } else if (keyCode === RIGHT_ARROW) {
-      if (currentX < userGraphData.length - 1) {
-        currentX++;
-      }
-    } else if (keyCode === LEFT_ARROW) {
-      if (currentX > 0) {
-        currentX--;
-      }
-    }
-  }
-}
 
 function drawStep4Intro() {
   textSize(20);
