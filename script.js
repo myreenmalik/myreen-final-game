@@ -38,6 +38,7 @@ let cleanedUpData = [
   ];
 
 let font;
+let cnv;
 let currentScreen = 'welcome';
 let startButton, step2Button, startCollectingButton, proceedToVisualizationButton;
 let player;
@@ -67,7 +68,8 @@ let uncleanItemsClicked = 0;
 
 /* SETUP RUNS ONCE */
 function setup() {
-  createCanvas(600, 400);
+  cnv = createCanvas(600, 400);
+  cnv.elt.addEventListener('click', () => cnv.elt.focus());
   background(dataBG);
   textAlign(CENTER);
   textSize(20);
@@ -99,6 +101,7 @@ function setup() {
   startCollectingButton.mousePressed(() => {
     currentScreen = 'dataCollectingGame';
     startCollectingButton.hide();
+    cnv.elt.focus();
   });
   startCollectingButton.hide();
 
@@ -384,7 +387,8 @@ function storeData() {
     storeDataButton.hide();
     player.x = width / 2;
     player.y = height - 50;
-    canMove = true;  // Allow movement again
+    canMove = true;
+    cnv.elt.focus();
   }
 
   if (recyclingDistance <= 50) {
