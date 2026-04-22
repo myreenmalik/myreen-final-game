@@ -39,7 +39,7 @@ let cleanedUpData = [
 
 let font;
 let currentScreen = 'welcome';
-let startButton, step2Button;
+let startButton, step2Button, startCollectingButton, proceedToVisualizationButton;
 let player;
 let cityOfficial, recyclingRep;
 let showData = false;
@@ -67,8 +67,8 @@ let uncleanItemsClicked = 0;
 
 /* SETUP RUNS ONCE */
 function setup() {
-  background(dataBG);
   createCanvas(600, 400);
+  background(dataBG);
   textAlign(CENTER);
   textSize(20);
   textFont(font);
@@ -511,51 +511,39 @@ function mousePressed() {
 }
 
 function drawCleanTableScreen() {
-  textSize(15)
+  textSize(15);
   text("Here is the clean version of the table! Now the \ndata will be much easier to work with", width / 2, 50);
   seeNewTableButton.hide();
- 
+
   let tableX = 50;
   let tableY = 80;
   let tableWidth = width - 100;
+  let rowHeight = 20;
+  let colWidth = tableWidth / 3;
 
-  // Draw table
-  drawTable(tableX, tableY, tableWidth);
-  
-  function drawTable(x, y, width) {
-    let rowHeight = 20;
-    let colWidth = width / 3;
+  fill(200);
+  rect(tableX, tableY, colWidth, rowHeight);
+  rect(tableX + colWidth, tableY, colWidth, rowHeight);
+  rect(tableX + 2 * colWidth, tableY, colWidth, rowHeight);
+  fill(0);
+  textSize(12);
+  text("Year", tableX + colWidth / 2, tableY + rowHeight / 2);
+  text("Recycling Rate", tableX + 1.5 * colWidth, tableY + rowHeight / 2);
+  text("Program Implemented", tableX + 2.5 * colWidth, tableY + rowHeight / 2);
 
-    // Headers
-    fill(200);
-    rect(x, y, colWidth, rowHeight);
-    rect(x + colWidth, y, colWidth, rowHeight);
-    rect(x + 2 * colWidth, y, colWidth, rowHeight);
+  for (let i = 0; i < cleanedUpData.length; i++) {
+    fill(255);
+    rect(tableX, tableY + (i + 1) * rowHeight, colWidth, rowHeight);
+    rect(tableX + colWidth, tableY + (i + 1) * rowHeight, colWidth, rowHeight);
+    rect(tableX + 2 * colWidth, tableY + (i + 1) * rowHeight, colWidth, rowHeight);
+
     fill(0);
-    textSize(12); // Reduced text size
-    text("Year", x + colWidth / 2, y + rowHeight / 2);
-    text("Recycling Rate", x + 1.5 * colWidth, y + rowHeight / 2);
-    text("Program Implemented", x + 2.5 * colWidth, y + rowHeight / 2);
-
-    // Data
-    for (let i = 0; i < cleanedUpData.length; i++) {
-      if (cleanedUpData[i].highlight) {
-        fill(242, 222, 222);
-      } else {
-        fill(255);
-      }
-      rect(x, y + (i + 1) * rowHeight, colWidth, rowHeight);
-      rect(x + colWidth, y + (i + 1) * rowHeight, colWidth, rowHeight);
-      rect(x + 2 * colWidth, y + (i + 1) * rowHeight, colWidth, rowHeight);
-
-      fill(0);
-      text(cleanedUpData[i].year, x + colWidth / 2, y + (i + 1) * rowHeight + rowHeight / 2);
-      text(cleanedUpData[i].rate, x + 1.5 * colWidth, y + (i + 1) * rowHeight + rowHeight / 2);
-      text(cleanedUpData[i].program, x + 2.5 * colWidth, y + (i + 1) * rowHeight + rowHeight / 2);
-  
-  step3Button.show();
-}
+    text(cleanedUpData[i].year, tableX + colWidth / 2, tableY + (i + 1) * rowHeight + rowHeight / 2);
+    text(cleanedUpData[i].rate, tableX + 1.5 * colWidth, tableY + (i + 1) * rowHeight + rowHeight / 2);
+    text(cleanedUpData[i].program, tableX + 2.5 * colWidth, tableY + (i + 1) * rowHeight + rowHeight / 2);
   }
+
+  step3Button.show();
 }
 
 function drawStep3Intro() {
