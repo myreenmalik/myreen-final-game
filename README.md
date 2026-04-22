@@ -2,6 +2,8 @@
 
 An interactive browser-based game that teaches the full data science pipeline through a real-world recycling scenario. Players step into the role of a data scientist and work through each stage — from defining a problem to presenting findings — using mini-games and visualizations along the way.
 
+Built entirely on my own in 11th grade as part of the **Girls Who Code Summer Camp**.
+
 ---
 
 ## How to Play
