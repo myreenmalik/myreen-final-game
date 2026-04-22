@@ -188,21 +188,23 @@ proceedToVisualizationButton.mousePressed(() => currentScreen = 'visualizingData
   startOverButton.mousePressed(() => currentScreen = 'welcome');
   startOverButton.hide();
 
+  world.gravity.y = 0;
+
   allSprites = new Group();
   player = createSprite(width / 2, height - 50, 40, 40);
+  player.collider = 'none';
+  player.color = color(255, 165, 0);
   allSprites.add(player);
 
   cityOfficial = createSprite(100, 100, 40, 40);
-  cityOfficial.collider = "s"
-  cityOfficial.shapeColor = color('blue');
+  cityOfficial.collider = 'none';
+  cityOfficial.color = color('blue');
   allSprites.add(cityOfficial);
-  cityOfficial.static = true;
 
   recyclingRep = createSprite(500, 100, 40, 40);
-  recyclingRep.collider = "s"
-  recyclingRep.shapeColor = color('green');
+  recyclingRep.collider = 'none';
+  recyclingRep.color = color('green');
   allSprites.add(recyclingRep);
-  recyclingRep.static = true;
 }
 
 function draw() {
@@ -325,20 +327,20 @@ function movePlayer() {
   let xMove = 0;
   let yMove = 0;
 
-  if (kb.pressing('left')) {
+  if (keyIsDown(LEFT_ARROW)) {
     xMove = -5;
   }
-  if (kb.pressing('right')) {
+  if (keyIsDown(RIGHT_ARROW)) {
     xMove = 5;
   }
-  if (kb.pressing('up')) {
+  if (keyIsDown(UP_ARROW)) {
     yMove = -5;
   }
-  if (kb.pressing('down')) {
+  if (keyIsDown(DOWN_ARROW)) {
     yMove = 5;
   }
-  player.position.x += xMove;
-  player.position.y += yMove;
+  player.x += xMove;
+  player.y += yMove;
 }
 
 function drawDataCollectingGame() {
@@ -347,17 +349,14 @@ function drawDataCollectingGame() {
   cityOfficial.visible = true;
   recyclingRep.visible = true;
 
-  drawSprite(player);
-  drawSprite(cityOfficial);
-  drawSprite(recyclingRep);
   movePlayer();
 
   fill(0);
   textSize(16);
   text("Move to the City Official (blue) or the Recycling \nRepresentative (green) to collect data.", width / 2, 20);
 
-  let cityDistance = dist(player.position.x, player.position.y, cityOfficial.position.x, cityOfficial.position.y);
-  let recyclingDistance = dist(player.position.x, player.position.y, recyclingRep.position.x, recyclingRep.position.y);
+  let cityDistance = dist(player.x, player.y, cityOfficial.x, cityOfficial.y);
+  let recyclingDistance = dist(player.x, player.y, recyclingRep.x, recyclingRep.y);
 
   if (cityDistance <= 50 && !collectedData) {
     showData = true;
@@ -377,14 +376,14 @@ function drawDataCollectingGame() {
 }
 
 function storeData() {
-  let cityDistance = dist(player.position.x, player.position.y, cityOfficial.position.x, cityOfficial.position.y);
-  let recyclingDistance = dist(player.position.x, player.position.y, recyclingRep.position.x, recyclingRep.position.y);
+  let cityDistance = dist(player.x, player.y, cityOfficial.x, cityOfficial.y);
+  let recyclingDistance = dist(player.x, player.y, recyclingRep.x, recyclingRep.y);
 
   if (cityDistance <= 50) {
     collectedData = true;
     storeDataButton.hide();
-    player.position.x = width / 2;
-    player.position.y = height - 50;
+    player.x = width / 2;
+    player.y = height - 50;
     canMove = true;  // Allow movement again
   }
 
