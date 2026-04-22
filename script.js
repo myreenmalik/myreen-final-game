@@ -327,16 +327,16 @@ function movePlayer() {
   let xMove = 0;
   let yMove = 0;
 
-  if (keyIsDown(LEFT_ARROW)) {
+  if (kb.pressing('left')) {
     xMove = -5;
   }
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (kb.pressing('right')) {
     xMove = 5;
   }
-  if (keyIsDown(UP_ARROW)) {
+  if (kb.pressing('up')) {
     yMove = -5;
   }
-  if (keyIsDown(DOWN_ARROW)) {
+  if (kb.pressing('down')) {
     yMove = 5;
   }
   player.x += xMove;
